@@ -44,7 +44,7 @@ In short, we want you to do the following:
 
 1. Prepare routes in PHP to act as an API, serving the front-end with an answer to whether or not the product fits in the box. 
    Evaluation should be done using the BoxPacker-package with information fetched from Partykungen.se.
-2. Fetch data through a JavaScript request towards the API.
+2. Fetch data through a JavaScript request towards your (PHP) API.
 3. Present the data to the user using TailwindCSS, notifying them whether or not the Product fits in any of our boxes - and if so, which box. It is perfectly fine to use TailwindCSS's "play CDN" (https://tailwindcss.com/docs/installation/play-cdn) to get up and running quickly!
 
 **Finally** (and optionally), we'd be intrigued to learn what **YOU** can do with our product data!
