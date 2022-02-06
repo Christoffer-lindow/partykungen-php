@@ -1,5 +1,7 @@
 {
-    "require": {
-        "erusev/parsedown": "^1.7"
-    }
+  "require": {
+    "erusev/parsedown": "^1.7",
+    "dvdoug/boxpacker": "^3.9",
+    "guzzlehttp/guzzle": "^7.0"
+  }
 }
