@@ -8,11 +8,15 @@ class ArticleService
 
   private $_apiClient;
   private $_boxRepo;
+  private $_articleFactory;
+  private $_boxedArticleFactory;
 
   function __construct()
   {
     $this->_apiClient = new ApiClient();
     $this->_boxRepo = new BoxRepo();
+    $this->_articleFactory = new ArticleFactory();
+    $this->_boxedArticleFactory = new BoxedArticleFactory();
   }
 
   function getBoxesThatArticleFitsInside($articleId)
@@ -21,10 +25,8 @@ class ArticleService
       $response = $this->_apiClient->getArticle($articleId);
       $responseBody = json_decode($response->getBody());
       $variant = $responseBody->variant_first_buyable;
-      $article = new Article($responseBody->id, $responseBody->name, $variant->weight, $variant->height, $variant->depth, $variant->width, true);
+      $article = $this->_articleFactory->articleFromVariant($responseBody->id, $responseBody->name, $variant);
       $boxes = $this->_boxRepo->getBoxes();
-
-
       $returnArr = array();
       foreach ($boxes as &$box) {
         $packer = new AppPacker($box);
@@ -32,7 +34,7 @@ class ArticleService
         $volumePacker = $packer->pack();
         $packedItems = $volumePacker->getitems();
         if ($packedItems->count() !== 0) {
-          $boxedArticle = new BoxedArticle($article, $box);
+          $boxedArticle = $this->_boxedArticleFactory->createBoxedArticle($article, $box);
           array_push($returnArr, $boxedArticle->asArray());
         }
       }
