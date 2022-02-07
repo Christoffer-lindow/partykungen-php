@@ -1,13 +1,11 @@
 // DOM elements
-const input = document.getElementById("article-id");
-const form = document.getElementById("article-form");
-const errorSpan = document.getElementById("error-span");
-const list = document.getElementById("boxes");
-const loader = document.getElementById("loader");
-
+let input = document.getElementById("article-id");
+let form = document.getElementById("article-form");
+let errorSpan = document.getElementById("error-span");
+let loader = document.getElementById("loader");
 // Page state
-const searchedValues = new Set();
-const statistics = new Map();
+let searchedValues = new Set();
+let statistics = new Map();
 
 // Validation
 function validateInput(value) {
@@ -79,6 +77,7 @@ async function handleSubmit(e) {
         break;
       case 200:
         handleSuccess(articleResponse.data);
+        input.value = "";
         break;
     }
   } catch (error) {
@@ -89,11 +88,8 @@ async function handleSubmit(e) {
 function handleSuccess(data) {
   for (let i = 0; i < data.length; i++) {
     handleStatistics(data[i]);
-    createListObject(data[i].box.name);
-    addChildToListObject(data[i].box.name, data[i].article);
+    updateStatisticsDom();
   }
-  updateStatisticsDom();
-  console.log(statistics);
   clearError();
 }
 
@@ -114,8 +110,20 @@ function updateStatisticsDom() {
     }
     const count = val.length;
     const itemText = count === 1 ? "item" : "items";
-    currentElement.textContent = `So far ${count} ${itemText} have been small enough to fit inside box: ${key}`;
+    currentElement.textContent = `${count} ${itemText} in ${key} Box`;
     statisticsElement.appendChild(currentElement);
+    let namesElement = document.getElementById(`namesElement-${key}`);
+    if (namesElement === null) {
+      namesElement = document.createElement("p");
+      namesElement.setAttribute("id", `namesElement-${key}`);
+    }
+    currentElement.classList.add("border-2");
+    currentElement.classList.add("border-sky-300");
+    currentElement.classList.add("mb-4");
+    currentElement.classList.add("p-4");
+    const text = `[${val.map((article) => article.name).toString()}]`;
+    namesElement.textContent = text;
+    currentElement.appendChild(namesElement);
   });
 }
 function createListObject(name) {
@@ -141,5 +149,16 @@ function setLoading(loading) {
   } else {
     loader.innerHTML = "";
   }
+}
+
+function clearStatisticsDom() {
+  const statisticsElement = document.getElementById("statistics");
+  statisticsElement.innerHTML = "";
+}
+
+function resetState() {
+  searchedValues = new Set();
+  statistics = new Map();
+  clearStatisticsDom();
 }
 window.onload = initHandlers();
