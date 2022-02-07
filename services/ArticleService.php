@@ -38,6 +38,7 @@ class ArticleService
       }
       return $returnArr;
     } catch (Exception $ex) {
+      throw $ex;
     }
   }
 }

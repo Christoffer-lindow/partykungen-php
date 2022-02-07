@@ -3,12 +3,8 @@
 use GuzzleHttp\Exception\RequestException;
 
 require_once('./Route.php');
-require_once('./models/Response.php');
-require_once('./models/ApiClient.php');
-require_once('./models/Article.php');
 require_once('./vendor/autoload.php');
 require_once('./responses.php');
-require_once('./models/AppPacker.php');
 require_once('./services/ArticleService.php');
 
 
@@ -22,17 +18,23 @@ Route::add('/', function () {
 // get article
 Route::add('/article', function () {
   $articleId = $_GET['article_id'];
-  $articleService = new ArticleService();
+  if (!is_numeric($articleId)) {
+    return badParamsResponse("article id needs to be a number");
+  }
+  if (strlen($articleId) < 5) {
+    return badParamsResponse("article id needs to be atleast 5 characters long");
+  }
+  if (strlen($articleId) > 7) {
+    return badParamsResponse("article id cannot be longer than 7 characters");
+  }
   try {
+    $articleService = new ArticleService();
     $boxes = $articleService->getBoxesThatArticleFitsInside($articleId);
     return okResponse($boxes, true);
   } catch (RequestException $e) {
-    $notFound = new Response($e->getResponse()->getStatusCode(), false, json_decode($e->getResponse()->getBody()));
-    return $notFound->send();
+    // I should check more exceptions here
+    resourceNotFoundResponse();
   }
-
-  // return here
-
 }, 'get');
 
 // Post route example
