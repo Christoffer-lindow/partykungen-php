@@ -12,18 +12,19 @@
 <body>
   <div class='w-full mt-12'>
     <div class='mx-12 flex flex-col'>
+      <h1 class='text-4xl mb-4'>Packer</h1>
       <form class="w-full" id="article-form">
         <div class="mb-6">
           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
             Article Id
           </label>
           <div>
-            <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" placeholder="12345" id="article-id">
+            <input autocomplete="off" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" placeholder="12345" id="article-id">
           </div>
           <span id="error-span" class="text-red-500"></span>
-          <span id="loader"></span>
+          <span id="loader" class="mt-1"></span>
         </div>
-        <div class="flex mb-2">
+        <div class=" flex mb-6">
           <button class="mr-4 w-1/2 shadow bg-blue-500 hover:bg-blue-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full" type="submit">
             Fetch article
           </button>
