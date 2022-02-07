@@ -1,12 +1,49 @@
+// DOM elements
 const input = document.getElementById("article-id");
 const form = document.getElementById("article-form");
 const errorSpan = document.getElementById("error-span");
 const list = document.getElementById("boxes");
 const loader = document.getElementById("loader");
 
+// Page state
 const searchedValues = new Set();
 const statistics = new Map();
 
+// Validation
+function validateInput(value) {
+  if (!validator.isNumeric(value)) return "article id needs to be a number";
+  if (validator.valueShorterThan(value, 5))
+    return "article id needs to be atleast 5 characters long";
+  if (validator.valueLongerThan(value, 7))
+    return "artcile id cannot be longer than 7 characters";
+  return null;
+}
+
+const validator = {
+  isNumeric: function (value) {
+    return /^[0-9]+$/.test(value);
+  },
+  valueShorterThan: function (value, limit) {
+    return value.length < limit;
+  },
+  valueLongerThan: function (value, limit) {
+    return value.length > limit;
+  },
+};
+
+// Data fetching
+async function fetchArticle(articleId) {
+  const result = await fetch(
+    `http://localhost:8000/article?article_id=${articleId}`,
+    {
+      mode: "cors",
+    }
+  );
+  const data = await result.json();
+  return data;
+}
+
+// Handlers
 function initHandlers() {
   form.onsubmit = handleSubmit;
 }
@@ -16,10 +53,6 @@ function handleStatistics(data) {
     statistics.set(data.box.name, []);
   }
   statistics.get(data.box.name).push(data.article);
-}
-
-function setError(message) {
-  errorSpan.innerHTML = message;
 }
 
 async function handleSubmit(e) {
@@ -53,10 +86,6 @@ async function handleSubmit(e) {
   }
 }
 
-function clearError() {
-  errorSpan.innerHTML = "";
-}
-
 function handleSuccess(data) {
   for (let i = 0; i < data.length; i++) {
     handleStatistics(data[i]);
@@ -68,6 +97,13 @@ function handleSuccess(data) {
   clearError();
 }
 
+// DOM manipulations
+function setError(message) {
+  errorSpan.innerHTML = message;
+}
+function clearError() {
+  errorSpan.innerHTML = "";
+}
 function updateStatisticsDom() {
   const statisticsElement = document.getElementById("statistics");
   statistics.forEach((val, key) => {
@@ -82,7 +118,6 @@ function updateStatisticsDom() {
     statisticsElement.appendChild(currentElement);
   });
 }
-
 function createListObject(name) {
   let listElement = document.getElementById(name);
   if (listElement === null) {
@@ -100,7 +135,6 @@ function addChildToListObject(id, article) {
   preElement.textContent = jsonStr;
   listElement.appendChild(preElement);
 }
-
 function setLoading(loading) {
   if (loading) {
     loader.innerHTML = "Loading";
@@ -108,36 +142,4 @@ function setLoading(loading) {
     loader.innerHTML = "";
   }
 }
-
-function validateInput(value) {
-  if (!validator.isNumeric(value)) return "article id needs to be a number";
-  if (validator.valueShorterThan(value, 5))
-    return "article id needs to be atleast 5 characters long";
-  if (validator.valueLongerThan(value, 7))
-    return "artcile id cannot be longer than 7 characters";
-  return null;
-}
-
-const validator = {
-  isNumeric: function (value) {
-    if (/^[0-9]+$/.test(value)) return true;
-  },
-  valueShorterThan: function (value, limit) {
-    return value.length < limit;
-  },
-  valueLongerThan: function (value, limit) {
-    return value.length > limit;
-  },
-};
-async function fetchArticle(articleId) {
-  const result = await fetch(
-    `http://localhost:8000/article?article_id=${articleId}`,
-    {
-      mode: "cors",
-    }
-  );
-  const data = await result.json();
-  return data;
-}
-
 window.onload = initHandlers();
