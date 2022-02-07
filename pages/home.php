@@ -6,16 +6,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Document</title>
+  <title>Partykungen</title>
 </head>
 
 <body>
   <div>
-    <form id="articleForm">
-      <input name="articleId" id="articleId" placeholder="article name" />
-      <button type="submit">Click me</button>
+    <form id="article-form">
+      <input name="articleId" id="article-id" placeholder="article name" />
+      <button type="submit">Fetch article</button>
     </form>
-    <span id="span"></span>
+    <span id="error-span"></span>
+    <span id="loader"></span>
+  </div>
+  <div id="statistics"></div>
+
+  <div>
+    <ul id="boxes">
+
+    </ul>
   </div>
 
 </body>

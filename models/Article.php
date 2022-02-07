@@ -16,21 +16,18 @@ class Article implements Item
   private $_depth;
   private $_height;
   private $_length;
-  private $_article_id;
   private $_keepFlat;
 
-  function __construct($id, $name, $weight, $length, $height, $depth, $width, $article_id, $keepFlat)
+  function __construct($id, $name, $weight, $height, $depth, $width, $keepFlat)
   {
     // We could (and should) run validations on the fields
     $this->_setArticleId($id);
     $this->_name = $name;
-    $this->_keepFlat = $keepFlat;
-    $this->_length = $length;
+    $this->_weight = $weight;
     $this->_height = $height;
     $this->_depth = $depth;
     $this->_width = $width;
-    $this->_weight = $weight;
-    $this->_article_id = $article_id;
+    $this->_keepFlat = $keepFlat;
   }
 
   public function getDescription(): string
@@ -60,7 +57,7 @@ class Article implements Item
 
   public function getDepth(): int
   {
-    return $this->_width;
+    return $this->_depth;
   }
   public function getWeight(): int
   {
@@ -79,7 +76,7 @@ class Article implements Item
 
   public function getLength(): int
   {
-    return $this->_length;
+    return $this->_width;
   }
 
   private function _setArticleId($id)
@@ -98,8 +95,8 @@ class Article implements Item
     $article['weight'] = $this->getWeight();
     $article['width'] = $this->getWidth();
     $article['depth'] = $this->getDepth();
+    $article['length'] = $this->getLength();
     $article['height'] = $this->getHeight();
-    $article['article_id'] = $this->getArticleId();
     return $article;
   }
 }

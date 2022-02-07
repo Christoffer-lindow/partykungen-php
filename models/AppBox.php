@@ -56,4 +56,14 @@ class AppBox implements Box
   {
     return $this->_width;
   }
+  public function asArray()
+  {
+    $appBox = array();
+    $appBox['name'] = $this->getReference();
+    $appBox['weight'] = $this->getMaxWeight();
+    $appBox['width'] = $this->getInnerWidth();
+    $appBox['depth'] = $this->getInnerDepth();
+    $appBox['length'] = $this->getInnerLength();
+    return $appBox;
+  }
 }
