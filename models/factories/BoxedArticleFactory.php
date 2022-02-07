@@ -1,5 +1,6 @@
 <?php
 
+require_once('./models/BoxedArticle.php');
 class BoxedArticleFactory
 {
 

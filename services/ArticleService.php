@@ -1,8 +1,10 @@
 <?php
 
 require_once('./models/ApiClient.php');
-require_once('./models/BoxedArticle.php');
 require_once('./repo/BoxRepo.php');
+require_once('./models/AppPacker.php');
+require_once('./models/factories/ArticleFactory.php');
+require_once('./models/factories/BoxedArticleFactory.php');
 class ArticleService
 {
 

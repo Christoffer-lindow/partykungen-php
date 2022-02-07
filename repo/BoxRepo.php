@@ -1,5 +1,6 @@
 <?php
 require_once('./repo/IBoxRepo.php');
+require_once('./models/AppBox.php');
 class BoxRepo implements IBoxRepo
 {
 
