@@ -21,6 +21,8 @@ class ArticleService
     $this->_boxedArticleFactory = new BoxedArticleFactory();
   }
 
+  // Some logic could be abstracted to private methods if we had more functions
+
   function getBoxesThatArticleFitsInside($articleId)
   {
     try {

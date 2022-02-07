@@ -1,6 +1,7 @@
 <?php
 require_once('./repo/IBoxRepo.php');
 require_once('./models/AppBox.php');
+// This is a mock repo, this could be changed to a database or a file etc.
 class BoxRepo implements IBoxRepo
 {
 

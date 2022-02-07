@@ -5,6 +5,11 @@ class BoxedArticle
   private $_article;
   private $_box;
 
+  // This class could have been:
+  // BoxedArticle: {
+  //    article: Article,
+  //    boxes: AppBox[]  
+  // }
   function __construct($article, $box)
   {
     $this->_article = $article;

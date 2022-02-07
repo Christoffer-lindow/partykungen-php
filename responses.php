@@ -1,5 +1,6 @@
 <?php
 require_once('./models/Response.php');
+// Responses could be a static class or a class per response
 
 function databaseConnectionErrorResponse()
 {

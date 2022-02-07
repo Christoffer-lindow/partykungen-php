@@ -14,6 +14,7 @@ class AppBox implements Box
 
   function __construct($maxWeight, $length, $width, $depth, $name)
   {
+    // Validation could be done here by setter methods
     $this->_maxWeight = $maxWeight;
     $this->_length = $length;
     $this->_width = $width;
